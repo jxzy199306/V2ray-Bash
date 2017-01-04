@@ -28,10 +28,10 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 function Install(){
 #Install Basic Packages
 if [[ ${OS} == 'CentOS' ]];then
-	yum install curl wget unzip ntp -y
+	yum install curl wget unzip ntp ntpdate -y
 else
 	apt-get update
-	apt-get install curl unzip ntp wget -y
+	apt-get install curl unzip ntp wget ntpdate -y
 fi
 
 #Set DNS
