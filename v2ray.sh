@@ -81,24 +81,13 @@ read -p "输入数据端口起点（默认：32001）:" subport1
 read -p "输入数据端口终点（默认：32500）:" subport2
 [ -z "$subport2" ] && subport2=32500
 
-read -p "输入每次开放端口数（默认：2）:" portnum
-[ -z "$portnum" ] && portnum=2
+read -p "输入每次开放端口数（默认：10）:" portnum
+[ -z "$portnum" ] && portnum=10
 
 read -p "输入端口变更时间（单位：分钟）:" porttime
-[ -z "$porttime" ] && porttime=3
+[ -z "$porttime" ] && porttime=5
 
-read -p "是否启用mKCP协议?（默认开启） [y/n]:" ifmkcp
-[ -z "$ifmkcp" ] && ifmkcp='y'
-
-if [[ $ifmkcp == 'y' ]];then
-        mkcp=',
-    "streamSettings": {
-    "network": "kcp"
-  }'
-else
-    mkcp=''
-    echo ''
-    read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
+read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 	[ -z "$ifhttpheader" ] && ifhttpheader='y'
 	if [[ $ifhttpheader == 'y' ]];then
 		httpheader=',
@@ -139,7 +128,17 @@ else
     }'
 	else
 		httpheader=''
-	fi
+		read -p "是否启用mKCP协议?（默认开启） [y/n]:" ifmkcp
+		[ -z "$ifmkcp" ] && ifmkcp='y'
+		if [[ $ifmkcp == 'y' ]];then
+        		mkcp=',
+   		 		"streamSettings": {
+   			 	"network": "kcp"
+  				}'
+		else
+				mkcp=''
+		fi
+
 fi
 
 
